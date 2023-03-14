@@ -280,27 +280,29 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
+APP_PATH="/Volumes/DATA/macOS/Apps"
 # some more ls aliases
 alias ll='ls -laF'
 alias la='ls -A'
 alias l='ls -CF'
+alias lf='la | fzf'
+alias q='exit'
 alias cat="ccat"
 # alias code='open -a Visual\ Studio\ Code.app'
 alias finder='open -a Finder.app'
 alias gclone='git clone --depth=1'
-alias githere='git init && git add . && git commit -m "first commit"'
 alias gclone-ios='git clone --depth=1 https://github.com/paul-nguyen-goldenowl/TemplateIOS'
 alias zshrc='vim ~/.zshrc && source ~/.zshrc && echo sourced!'
 alias web-ext='npx web-ext'
 alias xbuild="printf \"xcodebuild clean build -scheme GoMoney -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty \\n\\nxcodebuild -workspace Expenso.xcworkspace -scheme Expenso -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty\""
-alias limaa="cd /Volumes/DATA/lima/ && lima"
+alias limaa="cd $APP_PATH/lima/ && lima"
 alias limarc="mate ~/.lima/default/lima.yaml"
 alias vimrc="vim ~/.vimrc"
 alias v="vim"
 alias vi="vim"
 alias ifconfigg="ifconfig | grep inet"
 alias 91="vim  /Users/paul/Documents/91.md"
-alias multi="/Volumes/DATA/macOS/Multi/multi.sh"
+alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
 
 # enable auto-suggestions based on the history
@@ -349,6 +351,7 @@ export PATH=$PATH:"/Applications/TextMate.app/Contents/MacOS/"
 export PATH=$PATH:"${HOME}/Downloads/Apps/john-1.8.0.9-jumbo-macosx_avx2/run"
 export PATH=$PATH:"/Applications/Firefox Developer Edition.app/Contents/MacOS/"
 export PATH=$PATH:"/Applications/Beyond Compare.app/Contents/MacOS"
+export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
 
 export EDITOR="vim"
 export CLICOLOR=YES
@@ -369,7 +372,7 @@ export FZF_DEFAULT_COMMAND_FILE='fd --type f -d 1 --color=never --hidden'
 export FZF_DEFAULT_OPTS='--height=40% --color=bg+:#343d46,gutter:-1,pointer:#ff3c3c,info:#0dbc79,hl:#0dbc79,hl+:#23d18b'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND_FILE"
-export FZF_CTRL_T_OPTS="--preview 'bat --style=grid,numbers --color=always --line-range :50 {}'"
+export FZF_CTRL_T_OPTS="--preview 'bat --style=plain --color=always --line-range :50 {}'"
 
 export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
