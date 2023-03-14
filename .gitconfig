@@ -1,0 +1,23 @@
+[user]
+	email = 104960766+paul-nguyen-goldenowl@users.noreply.github.com
+	name = paul-nguyen-goldenowl
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[core]
+	excludesfile = /Users/paul/.gitignore
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/goldenowl/.stCommitMsg
+[alias]
+	st = status
+	ll = log --oneline
+	d = diff
+	sp = stash pop
