@@ -8,6 +8,7 @@
 	required = true
 [core]
 	excludesfile = /Users/paul/.gitignore
+	pager = delta
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -21,3 +22,49 @@
 	ll = log --oneline
 	d = diff
 	sp = stash pop
+	# typos
+	ad = add
+	bisec = bisect
+	bisetc = bisect
+	branhc = branch
+	breach = branch
+	breanch = branch
+	checkotu = checkout
+	checkou = checkout
+	checout = checkout
+	cherrypick = cherry-pick
+	cloen = clone
+	comit = commit
+	comitt = commit
+	committ = commit
+	dif = diff
+	fetc = fetch
+	fethc = fetch
+	greo = grep
+	grp = grep
+	grpe = grep
+	hceckout = checkout
+	mereg = merge
+	merg = merge
+	rbanch = branch
+	stat = status
+	statis = status
+	stats = status
+	statsu = status
+	statsus = status
+	statu = status
+	statys = status
+	stauts = status
+	sttus = status
+	submodules = submodule
+	tags = tag
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	light = true
+	side-by-side = true
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
