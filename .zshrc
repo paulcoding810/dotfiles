@@ -357,6 +357,7 @@ export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
 export EDITOR="vim"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
+
 mkcd() {
   if [ ! -n "$1" ]; then
     echo "Enter a directory name"
@@ -365,6 +366,11 @@ mkcd() {
   else
     mkdir $1 && cd $1
   fi
+}
+
+appid() {
+	script="osascript -e 'id of app \"$1\"'"
+	sh -c $script
 }
 
 ## fzf
