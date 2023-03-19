@@ -1,4 +1,4 @@
-## sources
+# sources
 # https://gist.github.com/Gram21/35dc66c4673bb63fa8c1
 echo Hi there
 echo
@@ -110,8 +110,8 @@ configure_prompt() {
             RPROMPT=
             ;;
         simple)
-            PROMPT=$'%B%F{%(#.blue.black)}%~%b%F{reset} $prompt_symbol '
-            RPROMPT=$'%F{%(?.green.red)}%B%?%b%F{reset}'
+            PROMPT=$'%B%F{%(#.red.blue)}%(#.root .)%~%b%F{reset}%B%F{%(#.red.blue)} $%b%F '
+	    RPROMPT=$'%F{%(?.green.red)}%B%?%b%F{reset}'
             ;;
     esac
 }
@@ -301,6 +301,7 @@ alias vimrc="vim ~/.vimrc"
 alias v="vim"
 alias vi="vim"
 alias ifconfigg="ifconfig | grep inet"
+alias ip="ipconfig getifaddr en0"
 alias 91="vim  /Users/paul/Documents/91.md"
 alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
