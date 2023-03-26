@@ -1,4 +1,17 @@
+" https://gist.github.com/simonista/8703722
+
 set number
+syntax on
+set ruler
+set laststatus=2
+" Searching
+nnoremap / /\v
+vnoremap / /\v
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
 
 call plug#begin()
 " The default plugin directory will be as follows:

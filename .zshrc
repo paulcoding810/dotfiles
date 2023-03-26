@@ -216,7 +216,7 @@ function appath ()
     fi;
 
     # Look for the path of the application bundle
-    # Search /Applicatinos first
+    # Search /Applications first
     app_path_and_name="$(find /Applications -type d -name "$app_name" -maxdepth 5 | fgrep -m 1 "$app_name")";
     # If not found, search the LaunchServices database (this is the time-consuming step)
     test "$app_path_and_name" || app_path_and_name="$($path_to_lsregister/lsregister -dump | fgrep -v '/Volumes|/System' | egrep --max-count 1 "path: */.*/$app_name " | sed 's:.* \(/.*app\) .*:\1:')"
@@ -350,7 +350,7 @@ fi
 export PATH=$PATH:"/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH=$PATH:"/Applications/TextMate.app/Contents/MacOS/"
 export PATH=$PATH:"${HOME}/Downloads/Apps/john-1.8.0.9-jumbo-macosx_avx2/run"
-export PATH=$PATH:"/Applications/Firefox Developer Edition.app/Contents/MacOS/"
+export PATH=$PATH:"/Applications/Firefox Developer Edition.app/Contents/MacOS"
 export PATH=$PATH:"/Applications/Beyond Compare.app/Contents/MacOS"
 export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
 

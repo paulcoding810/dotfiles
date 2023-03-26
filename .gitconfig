@@ -68,3 +68,5 @@
 	conflictstyle = diff3
 [diff]
 	colorMoved = default
+[push]
+	default = upstream
