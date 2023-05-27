@@ -70,3 +70,4 @@
 	colorMoved = default
 [push]
 	default = upstream
+	autoSetupRemote = true

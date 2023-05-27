@@ -353,10 +353,11 @@ export PATH=$PATH:"${HOME}/Downloads/Apps/john-1.8.0.9-jumbo-macosx_avx2/run"
 export PATH=$PATH:"/Applications/Firefox Developer Edition.app/Contents/MacOS"
 export PATH=$PATH:"/Applications/Beyond Compare.app/Contents/MacOS"
 export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
-
+export PATH="$PATH:$(python3 -m site --user-base)/bin"
 export EDITOR="vim"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
+export JAVA_HOME=`/usr/libexec/java_home`
 
 mkcd() {
   if [ ! -n "$1" ]; then
@@ -385,3 +386,7 @@ export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
