@@ -305,7 +305,8 @@ alias ip="ipconfig getifaddr en0"
 alias 91="vim  /Users/paul/Documents/91.md"
 alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
-
+alias backupp='/Volumes/DATA/macOS/Backup/backup_mac.sh'
+alias lv='find `pwd` -depth 1'
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
