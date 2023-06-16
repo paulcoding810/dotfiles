@@ -1,0 +1,5 @@
+
+#!/bin/sh
+link=`node vtv.js`
+echo Opening $link ....
+/Applications/IINA.app/Contents/MacOS/IINA --speed=2.0 $link > /dev/null 2>&1 &
