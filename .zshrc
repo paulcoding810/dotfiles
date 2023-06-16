@@ -1,7 +1,9 @@
 # sources
 # https://gist.github.com/Gram21/35dc66c4673bb63fa8c1
-echo Hi there
+echo `date -I`
 echo
+
+zmodload zsh/zprof
 
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
@@ -231,6 +233,20 @@ function appath ()
     fi
 }
 
+## find where paths exported
+find_path_in_files() {
+  local path_to_find=$1
+  local files=("$HOME/.bash_profile" "$HOME/.bash_login" "$HOME/.zshrc" "$HOME/.profile" "/etc/profile" "/etc/bashrc" "/etc/bash.bashrc")
+
+  for file in "${files[@]}"; do
+    if [[ -f "$file" ]]; then
+      if grep -q $path_to_find "$file"; then
+        echo "The path '$path_to_find' is exported in the file: $file"
+      fi
+    fi
+  done
+}
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
@@ -306,7 +322,7 @@ alias 91="vim  /Users/paul/Documents/91.md"
 alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
 alias backupp='/Volumes/DATA/macOS/Backup/backup_mac.sh'
-alias lv='find `pwd` -depth 1'
+alias lv='find `pwd` -depth 1 | fzf -m'
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -355,10 +371,11 @@ export PATH=$PATH:"/Applications/Firefox Developer Edition.app/Contents/MacOS"
 export PATH=$PATH:"/Applications/Beyond Compare.app/Contents/MacOS"
 export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
 export PATH="$PATH:$(python3 -m site --user-base)/bin"
+export PATH=$PATH:"${HOME}/.bin"
 export EDITOR="vim"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
-export JAVA_HOME=`/usr/libexec/java_home`
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
 
 mkcd() {
   if [ ! -n "$1" ]; then
@@ -375,6 +392,23 @@ appid() {
 	sh -c $script
 }
 
+adbw() {
+    adb connect $IP:$1
+    adb tcpip 5555
+    adb disconnect
+}
+
+adbc(){
+	echo connect to $IP:5555
+	adb connect $IP:5555
+	adb  shell settings get global http_proxy
+	adb  reverse tcp:8081 tcp:8081
+	adb  reverse tcp:9090 tcp:9090
+	adb  reverse tcp:8000 tcp:8000
+	adb  reverse tcp:8097 tcp:8097
+	adb  reverse tcp:3000 tcp:3000
+	adb  reverse --list
+}
 ## fzf
 export FZF_DEFAULT_COMMAND='fd -d 1 --color=never --hidden'
 export FZF_DEFAULT_COMMAND_FILE='fd --type f -d 1 --color=never --hidden'
@@ -388,6 +422,30 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+_install_nvm() {
+  unset -f nvm npm node
+  echo install nvm...
+  # Set up "nvm" could use "--no-use" to defer setup, but we are here to use it
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This sets up nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # nvm bash_completion
+  "$@"
+  echo 213
+}
+
+function nvm() {
+    _install_nvm nvm "$@"
+}
+
+function npm() {
+    _install_nvm npm "$@"
+}
+
+function node() {
+    _install_nvm node "$@"
+}
+
+# zprof
