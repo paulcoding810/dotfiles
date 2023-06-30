@@ -301,7 +301,10 @@ APP_PATH="/Volumes/DATA/macOS/Apps"
 alias ll='ls -laF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lf='la | fzf'
+alias lf='la | fzf -m'
+alias adbp='adb shell settings put global http_proxy `ip`:8080'
+alias adbpp='adb shell settings put global http_proxy :0'
+alias adbe='/Users/paul/Library/Android/sdk/tools/emulator -avd Pixel_3_XL_API_33  -netdelay none -netspeed full  > /dev/null 2>&1 &'
 alias cdf='cd `lf`'
 alias catf='cat `lf`'
 alias q='exit'
@@ -395,23 +398,6 @@ appid() {
 	sh -c $script
 }
 
-adbw() {
-    adb connect $IP:$1
-    adb tcpip 5555
-    adb disconnect
-}
-
-adbc(){
-	echo connect to $IP:5555
-	adb connect $IP:5555
-	adb  shell settings get global http_proxy
-	adb  reverse tcp:8081 tcp:8081
-	adb  reverse tcp:9090 tcp:9090
-	adb  reverse tcp:8000 tcp:8000
-	adb  reverse tcp:8097 tcp:8097
-	adb  reverse tcp:3000 tcp:3000
-	adb  reverse --list
-}
 ## fzf
 export FZF_DEFAULT_COMMAND='fd -d 1 --color=never --hidden'
 export FZF_DEFAULT_COMMAND_FILE='fd --type f -d 1 --color=never --hidden'
@@ -424,6 +410,7 @@ export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.zsh/adb.zsh ] && source ~/.zsh/adb.zsh
 
 export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

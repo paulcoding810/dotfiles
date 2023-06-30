@@ -58,6 +58,7 @@
 	sttus = status
 	submodules = submodule
 	tags = tag
+	zip = archive HEAD -o
 [interactive]
 	diffFilter = delta --color-only
 [delta]
