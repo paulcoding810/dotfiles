@@ -29,8 +29,6 @@ adbw() {
 	adb tcpip 5555
 }
 adbc() {
-	echo connect to $IP:5555
-	adb connect $IP:5555
 	adb shell settings get global http_proxy
 	adb reverse tcp:8081 tcp:8081
 	adb reverse tcp:9090 tcp:9090
