@@ -314,6 +314,7 @@ alias finder='open -a Finder.app'
 alias gclone='git clone --depth=1'
 alias gclone-ios='git clone --depth=1 https://github.com/paul-nguyen-goldenowl/TemplateIOS'
 alias zshrc='vim ~/.zshrc && source ~/.zshrc && echo sourced!'
+alias adbrc='vim ~/.zsh/adb.zsh && shfmt -w ~/.zsh/adb.zsh && source ~/.zsh/adb.zsh && echo sourced!'
 alias web-ext='npx web-ext'
 alias xbuild="printf \"xcodebuild clean build -scheme GoMoney -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty \\n\\nxcodebuild -workspace Expenso.xcworkspace -scheme Expenso -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty\""
 alias limaa="cd $APP_PATH/lima/ && lima"
