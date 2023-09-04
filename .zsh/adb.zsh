@@ -14,6 +14,7 @@ adbx() {
 		red 'error: missing device ordinal number'
 		echo Usage:
 		green '\tadbx 1'
+		adb devices | sed -n "$device p" | sed 's/[[:space:]]device//'
 		return 1
 	fi
 	local adb_path=$(alias adb)
@@ -23,6 +24,7 @@ adbx() {
 	local model=$(adb -s $ip shell getprop ro.product.model)
 	green "using $model ($ip)"
 	alias adb="adb -s ${ip}"
+	alias scrcpy="scrcpy -s ${ip} > /dev/null 2&>1 &"
 	echo sourcing...
 	source ~/.zsh/adb.zsh
 }
@@ -49,7 +51,7 @@ adbr() {
 	adb shell screenrecord /data/local/tmp/screenrecord.mp4 &
 	local recording_pid=$!
 	echo "Screen recording started. Press Ctrl + C to stop..."
-	trap "kill $recording_pid" INT
+	trap '[[ -n "$recording_pid" ]] && ps -p "$recording_pid" > /dev/null && kill "$recording_pid"' INT
 	wait $recording_pid
 	sleep 1
 	adb pull /data/local/tmp/screenrecord.mp4 "$destination_path/screenrecord.mp4"

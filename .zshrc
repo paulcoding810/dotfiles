@@ -301,10 +301,10 @@ APP_PATH="/Volumes/DATA/macOS/Apps"
 alias ll='ls -laF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lf='la | fzf -m'
 alias adbp='adb shell settings put global http_proxy `ip`:8080'
+alias lf='la | fzf -0 -m --preview "realpath {}" --preview-window=up:30%:wrap | tr "\n" "\0" | xargs -0 realpath | tee >(pbcopy)'
 alias adbpp='adb shell settings put global http_proxy :0'
-alias adbe='/Users/paul/Library/Android/sdk/tools/emulator -avd Pixel_3_XL_API_33  -netdelay none -netspeed full  > /dev/null 2>&1 &'
+alias adbe='/Users/paul/Library/Android/sdk/emulator/emulator -avd Pixel_5_API_28  -netdelay none -netspeed full  > /dev/null 2>&1 &'
 alias cdf='cd `lf`'
 alias catf='cat `lf`'
 alias q='exit'
@@ -364,10 +364,10 @@ fi
 # Add the Android SDK tools to $PATH and set $ANDROID_HOME (standard)
 ANDROID_HOME="${HOME}/Library/Android/sdk"
 if [ -d "${ANDROID_HOME}" ]; then
-  PATH="${PATH}:${ANDROID_HOME}/tools"
   PATH="${PATH}:${ANDROID_HOME}/platform-tools"
   ANDROID_BUILD_TOOLS_DIR="${ANDROID_HOME}/build-tools"
   PATH="${PATH}:${ANDROID_BUILD_TOOLS_DIR}/$(ls -1 ${ANDROID_BUILD_TOOLS_DIR} | sort -rn | head -1)"
+  PATH="${PATH}:${ANDROID_HOME}/tools"
 fi
 
 export PATH=$PATH:"/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -379,7 +379,10 @@ export PATH=$PATH:"$APP_PATH/wabt-1.0.32/bin"
 export PATH="$PATH:$(python3 -m site --user-base)/bin"
 export PATH=$PATH:"${HOME}/.bin"
 export PATH=$PATH:"${HOME}/.spicetify"
+export PATH=$PATH:"${HOME}/Library/flutter/bin"
+export PATH=$PATH:"${HOME}/Library/nvim-macos/bin"
 export EDITOR="vim"
+export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
@@ -418,7 +421,7 @@ export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 _install_nvm() {
-  unset -f nvm npm node
+  unset -f nvm npm node yarn
   echo install nvm...
   # Set up "nvm" could use "--no-use" to defer setup, but we are here to use it
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This sets up nvm
@@ -435,8 +438,15 @@ function npm() {
     _install_nvm npm "$@"
 }
 
+function yarn() {
+    _install_nvm yarn "$@"
+}
+
 function node() {
     _install_nvm node "$@"
 }
 
 # zprof
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/opt/node@16/bin:$PATH"
