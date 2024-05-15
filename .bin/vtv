@@ -1,5 +1,5 @@
-
 #!/bin/sh
-link=`node ~/.bin/vtv.js`
+NODE_PATH='/Users/paul/.nvm/versions/node/v20.12.2/bin/node'
+link=`$NODE_PATH ~/.bin/vtv.js`
 echo Opening $link ....
 /Applications/IINA.app/Contents/MacOS/IINA --mpv-speed=1.6 $link > /dev/null 2>&1 &
