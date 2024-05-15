@@ -9,6 +9,8 @@
 [core]
 	excludesfile = /Users/paul/.gitignore
 	pager = delta
+	autocrlf = input
+	ignorecase = false
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -25,6 +27,7 @@
 	# typos
 	ad = add
 	bisec = bisect
+	b = branch --sort=-committerdate
 	bisetc = bisect
 	branhc = branch
 	breach = branch
