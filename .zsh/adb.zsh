@@ -34,11 +34,13 @@ adbw() {
 adbc() {
 	adb shell settings get global http_proxy
 	adb reverse tcp:8081 tcp:8081
+	adb reverse tcp:8082 tcp:8082
 	adb reverse tcp:9090 tcp:9090
 	adb reverse tcp:8000 tcp:8000
 	adb reverse tcp:8097 tcp:8097
 	adb reverse tcp:3000 tcp:3000
 	adb reverse tcp:8080 tcp:8080
+	adb reverse tcp:1883 tcp:1883
 	adb reverse --list
 }
 adbs() {
@@ -56,4 +58,26 @@ adbr() {
 	sleep 1
 	adb pull /data/local/tmp/screenrecord.mp4 "$destination_path/screenrecord.mp4"
 	echo "Video file pulled to $destination_path/screenrecord.mp4"
+}
+compress_video() {
+	if [ "$#" -ne 1 ]; then
+		echo "Usage: compress_video input_file "
+		return 1
+	fi
+
+	input_file="$1"
+	output_file="$HOME/Downloads/compressed.mp4"
+
+	# Set CRF value based on desired compression level (adjust as needed)
+	crf_value=23
+
+	# Run ffmpeg command for video compression
+	ffmpeg -i "$input_file" -c:v libx264 -crf "$crf_value" -c:a aac -strict experimental -b:a 192k "$output_file"
+
+	if [ $? -eq 0 ]; then
+		echo "Compression successful!"
+		rm "$input_file"
+	else
+		echo "Compression failed!"
+	fi
 }
