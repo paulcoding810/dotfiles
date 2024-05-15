@@ -1,4 +1,4 @@
-# sources
+#sources
 # https://gist.github.com/Gram21/35dc66c4673bb63fa8c1
 echo `date -I`
 echo
@@ -309,6 +309,7 @@ alias cdf='cd `lf`'
 alias catf='cat `lf`'
 alias q='exit'
 alias cat="ccat"
+alias sim="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 # alias code='open -a Visual\ Studio\ Code.app'
 alias finder='open -a Finder.app'
 alias gclone='git clone --depth=1'
@@ -316,7 +317,6 @@ alias gclone-ios='git clone --depth=1 https://github.com/paul-nguyen-goldenowl/T
 alias zshrc='vim ~/.zshrc && source ~/.zshrc && echo sourced!'
 alias adbrc='vim ~/.zsh/adb.zsh && shfmt -w ~/.zsh/adb.zsh && source ~/.zsh/adb.zsh && echo sourced!'
 alias web-ext='npx web-ext'
-alias xbuild="printf \"xcodebuild clean build -scheme GoMoney -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty \\n\\nxcodebuild -workspace Expenso.xcworkspace -scheme Expenso -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' | xcpretty\""
 alias limaa="cd $APP_PATH/lima/ && lima"
 alias limarc="mate ~/.lima/default/lima.yaml"
 alias vimrc="vim ~/.vimrc"
@@ -329,6 +329,12 @@ alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
 alias backupp='/Volumes/DATA/macOS/Backup/backup_mac.sh'
 alias lv='find `pwd` -depth 1 | fzf -m'
+alias s='subl'
+alias curll="curl -kv -w '\n* Response time: %{time_total}s\n' "
+alias tyzen="/Users/paul/tizen-studio/tools/ide/bin/tizen"
+alias sdb="/Users/paul/tizen-studio/tools/sdb"
+alias gitleakss="gitleaks detect --source . -v"
+
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -370,6 +376,16 @@ if [ -d "${ANDROID_HOME}" ]; then
   PATH="${PATH}:${ANDROID_HOME}/tools"
 fi
 
+# Setting the LG_WEBOS_TV_SDK_HOME variable to the parent directory of CLI
+export LG_WEBOS_TV_SDK_HOME="/Users/paul/Library/webos"
+
+if [ -d "$LG_WEBOS_TV_SDK_HOME/CLI/bin" ]; then
+  # Setting the WEBOS_CLI_TV variable to the bin directory of CLI
+  export WEBOS_CLI_TV="$LG_WEBOS_TV_SDK_HOME/CLI/bin"
+  # Adding the bin directory of CLI to the PATH variable
+  export PATH="$PATH:$WEBOS_CLI_TV"
+fi
+
 export PATH=$PATH:"/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH=$PATH:"/Applications/TextMate.app/Contents/MacOS/"
 export PATH=$PATH:"${HOME}/Downloads/Apps/john-1.8.0.9-jumbo-macosx_avx2/run"
@@ -381,11 +397,16 @@ export PATH=$PATH:"${HOME}/.bin"
 export PATH=$PATH:"${HOME}/.spicetify"
 export PATH=$PATH:"${HOME}/Library/flutter/bin"
 export PATH=$PATH:"${HOME}/Library/nvim-macos/bin"
+export PATH=$PATH:"/usr/local/bin/quickemu"
+export PATH=$PATH:"/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+export PATH="/usr/local/bin:${PATH}"
+
 export EDITOR="vim"
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 mkcd() {
   if [ ! -n "$1" ]; then
@@ -415,19 +436,19 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zsh/adb.zsh ] && source ~/.zsh/adb.zsh
+[ -f ~/.zsh/ios.zsh ] && source ~/.zsh/ios.zsh
 
 export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 _install_nvm() {
-  unset -f nvm npm node yarn
+  unset -f nvm npm node yarn npx
   echo install nvm...
   # Set up "nvm" could use "--no-use" to defer setup, but we are here to use it
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This sets up nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # nvm bash_completion
   "$@"
-  echo 213
 }
 
 function nvm() {
@@ -438,8 +459,13 @@ function npm() {
     _install_nvm npm "$@"
 }
 
+
 function yarn() {
     _install_nvm yarn "$@"
+}
+
+function npx() {
+    _install_nvm npx "$@"
 }
 
 function node() {
@@ -449,4 +475,13 @@ function node() {
 # zprof
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export PATH="/usr/local/opt/node@16/bin:$PATH"
+export PATH="/Users/paul/.nvm/versions/node/v20.5.1/bin/node:$PATH"
+
+# bun completions
+[ -s "/Users/paul/.bun/_bun" ] && source "/Users/paul/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH=$PATH:/Users/paul/.spicetify
