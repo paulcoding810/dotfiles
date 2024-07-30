@@ -35,6 +35,7 @@ adbc() {
 	adb shell settings get global http_proxy
 	adb reverse tcp:8081 tcp:8081
 	adb reverse tcp:8082 tcp:8082
+	adb reverse tcp:8083 tcp:8083
 	adb reverse tcp:9090 tcp:9090
 	adb reverse tcp:8000 tcp:8000
 	adb reverse tcp:8097 tcp:8097
@@ -80,4 +81,29 @@ compress_video() {
 	else
 		echo "Compression failed!"
 	fi
+}
+
+# Function to turn on Android proxy, run mitmweb, and turn off proxy when mitmweb is killed
+mitm() {
+	echo ip=$(ip)
+
+	adb shell settings put global http_proxy $(ip):8888
+
+	mitmweb -p 8888 &
+
+	# Get the process ID of mitmweb
+	local mitmweb_pid=$!
+
+	turn_off_proxy() {
+		kill $mitmweb_pid
+		trap - INT
+		adb shell settings put global http_proxy :0
+		echo "Proxy turned off"
+	}
+
+	trap turn_off_proxy INT
+
+	wait ${mitmweb_pid}
+
+	turn_off_proxy
 }
