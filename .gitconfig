@@ -1,13 +1,10 @@
-[user]
-	email = 104960766+paul-nguyen-goldenowl@users.noreply.github.com
-	name = paul-nguyen-goldenowl
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [core]
-	excludesfile = /Users/paul/.gitignore
+	excludesfile = $HOME/.gitignore
 	pager = delta
 	autocrlf = input
 	ignorecase = false
@@ -18,7 +15,7 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [commit]
-	template = /Users/goldenowl/.stCommitMsg
+	template = $HOME/.stCommitMsg
 [alias]
 	st = status
 	ll = log --oneline
@@ -75,3 +72,11 @@
 [push]
 	default = upstream
 	autoSetupRemote = true
+[include]
+	path = "~/.config/git/longnghia.config"
+[includeIf "gitdir:/Volumes/DATA/GO/"]
+	path = "~/.config/git/go.github.config"
+[includeIf "gitdir:/Volumes/DATA/GO/oyika/"]
+	path = "~/.config/git/go.bitbucket.config"
+[init]
+	defaultBranch = main
