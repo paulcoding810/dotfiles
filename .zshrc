@@ -334,6 +334,7 @@ alias curll="curl -kv -w '\n* Response time: %{time_total}s\n' "
 alias tyzen="/Users/paul/tizen-studio/tools/ide/bin/tizen"
 alias sdb="/Users/paul/tizen-studio/tools/sdb"
 alias gitleakss="gitleaks detect --source . -v"
+alias dumpapk="aapt dump badging"
 
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -386,6 +387,10 @@ if [ -d "$LG_WEBOS_TV_SDK_HOME/CLI/bin" ]; then
   export PATH="$PATH:$WEBOS_CLI_TV"
 fi
 
+
+
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
 export PATH=$PATH:"/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH=$PATH:"/Applications/TextMate.app/Contents/MacOS/"
 export PATH=$PATH:"${HOME}/Downloads/Apps/john-1.8.0.9-jumbo-macosx_avx2/run"
@@ -436,6 +441,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zsh/adb.zsh ] && source ~/.zsh/adb.zsh
+[ -f ~/.zsh/hugo.zsh ] && source ~/.zsh/hugo.zsh
 [ -f ~/.zsh/ios.zsh ] && source ~/.zsh/ios.zsh
 
 export NVM_DIR="$HOME/.nvm"
@@ -485,3 +491,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH=$PATH:/Users/paul/.spicetify
+
+# Created by `pipx` on 2024-07-21 09:08:34
+export PATH="$PATH:/Users/paul/.local/bin"
