@@ -323,7 +323,6 @@ alias vimrc="vim ~/.vimrc"
 alias v="vim"
 alias vi="vim"
 alias ifconfigg="ifconfig | grep inet"
-alias ip="ipconfig getifaddr en0"
 alias 91="vim  /Users/paul/Documents/91.md"
 alias multi="$APP_PATH/Multi/multi.sh"
 alias config='/usr/bin/git --git-dir=/Users/paul/.cfg/ --work-tree=/Users/paul'
@@ -476,6 +475,11 @@ function npx() {
 
 function node() {
     _install_nvm node "$@"
+}
+
+# ip
+ip(){
+	ifconfig | grep 'inet 192.168' | awk '{print $2}'
 }
 
 # zprof
