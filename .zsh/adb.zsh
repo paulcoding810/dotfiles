@@ -60,6 +60,16 @@ adbr() {
 	adb pull /data/local/tmp/screenrecord.mp4 "$destination_path/screenrecord.mp4"
 	echo "Video file pulled to $destination_path/screenrecord.mp4"
 }
+
+## install apks from input
+adbi() {
+	for f in $@; do
+		echo installing $f
+		adb install $f
+		echo
+	done
+}
+
 compress_video() {
 	if [ "$#" -ne 1 ]; then
 		echo "Usage: compress_video input_file "
