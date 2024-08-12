@@ -334,6 +334,7 @@ alias tyzen="/Users/paul/tizen-studio/tools/ide/bin/tizen"
 alias sdb="/Users/paul/tizen-studio/tools/sdb"
 alias gitleakss="gitleaks detect --source . -v"
 alias dumpapk="aapt dump badging"
+alias n="wren"
 
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
