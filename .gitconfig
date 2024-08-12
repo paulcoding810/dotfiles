@@ -4,7 +4,7 @@
 	process = git-lfs filter-process
 	required = true
 [core]
-	excludesfile = $HOME/.gitignore
+	excludesfile = ~/.gitignore
 	pager = delta
 	autocrlf = input
 	ignorecase = false
@@ -15,7 +15,7 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [commit]
-	template = $HOME/.stCommitMsg
+	template = ~/.stCommitMsg
 [alias]
 	st = status
 	ll = log --oneline

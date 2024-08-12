@@ -412,6 +412,11 @@ export NODE_PATH=/usr/local/lib/node_modules
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
+LESSPIPE=`which src-hilite-lesspipe.sh`
+export LESSOPEN="| ${LESSPIPE} %s"
+export LESS=' -R -X -F '
+
 mkcd() {
   if [ ! -n "$1" ]; then
     echo "Enter a directory name"
