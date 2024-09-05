@@ -59,6 +59,8 @@
 	submodules = submodule
 	tags = tag
 	zip = archive HEAD -o
+	# https://stackoverflow.com/a/23486788
+	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} \"$@\");};f"
 [interactive]
 	diffFilter = delta --color-only
 [delta]
