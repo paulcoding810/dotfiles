@@ -448,6 +448,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 [ -f ~/.zsh/adb.zsh ] && source ~/.zsh/adb.zsh
 [ -f ~/.zsh/hugo.zsh ] && source ~/.zsh/hugo.zsh
 [ -f ~/.zsh/ios.zsh ] && source ~/.zsh/ios.zsh
+[ -f ~/.venv/bin/activate ] && source ~/.venv/bin/activate
 
 export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -504,3 +505,6 @@ export PATH=$PATH:/Users/paul/.spicetify
 
 # Created by `pipx` on 2024-07-21 09:08:34
 export PATH="$PATH:/Users/paul/.local/bin"
+
+# rust
+. "$HOME/.cargo/env"
