@@ -63,11 +63,19 @@ adbr() {
 
 ## install apks from input
 adbi() {
+	adb install-multi-package $a
+}
+adbi-sync() {
 	for f in $@; do
 		echo installing $f
 		adb install $f
 		echo
 	done
+}
+
+# list devices
+adbd() {
+	adb devices
 }
 
 compress_video() {
