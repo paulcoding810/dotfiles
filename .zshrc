@@ -95,6 +95,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+
 configure_prompt() {
     prompt_symbol=㉿
 	[ "$EUID" -eq 0 ] && prompt_symbol=💀
@@ -410,7 +411,7 @@ export EDITOR="vim"
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 export CLICOLOR=YES
 export NODE_PATH=/usr/local/lib/node_modules
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/

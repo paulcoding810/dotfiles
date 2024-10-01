@@ -63,7 +63,7 @@ adbr() {
 
 ## install apks from input
 adbi() {
-	adb install-multi-package $a
+	adb install-multi-package $@
 }
 adbi-sync() {
 	for f in $@; do
@@ -76,6 +76,13 @@ adbi-sync() {
 # list devices
 adbd() {
 	adb devices
+}
+
+# input text
+adbt() {
+	local text="$1"
+	local quoted_text=$(echo "$text" | sed 's/;/\\;/g')
+	adb shell input text "$quoted_text"
 }
 
 compress_video() {

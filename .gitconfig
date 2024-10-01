@@ -33,6 +33,7 @@
 	checkou = checkout
 	checout = checkout
 	cherrypick = cherry-pick
+	cp = cherry-pick
 	cloen = clone
 	comit = commit
 	comitt = commit
