@@ -108,6 +108,10 @@ compress_video() {
 	fi
 }
 
+adbpush() {
+	adb push $1 /storage/emulated/0/Download
+}
+
 # Function to turn on Android proxy, run mitmweb, and turn off proxy when mitmweb is killed
 mitm() {
 	echo ip=$(ip)
@@ -131,4 +135,85 @@ mitm() {
 	wait ${mitmweb_pid}
 
 	turn_off_proxy
+}
+
+
+apk_sha() {
+  local file="$1"
+
+  # Check if the file exists
+  if [[ ! -f "$file" ]]; then
+    echo "File does not exist."
+    return 1
+  fi
+
+  # Check if the file is an XAPK (usually a ZIP file containing APKs)
+  if [[ "$file" =~ \.(xapk|zip)$ ]]; then
+    echo "Detected XAPK file."
+    # Extract APK from XAPK (assuming it is a ZIP archive)
+    local temp_dir=$(mktemp -d)
+    unzip -q "$file" -d "$temp_dir"
+    
+    # Find the APK file inside the XAPK archive (assuming it's inside a folder named 'com' or similar)
+    local apk_file
+    apk_file=$(find "$temp_dir" -name "*.apk" -print -quit)
+
+    if [[ -z "$apk_file" ]]; then
+      echo "No APK found inside the XAPK file."
+      rm -rf "$temp_dir"
+      return 1
+    fi
+
+    echo "Found APK: $apk_file"
+    file="$apk_file"  # Set the file to the extracted APK
+  fi
+
+  # Now, we can calculate the SHA1 of the APK using keytool
+  if command -v keytool &> /dev/null; then
+    echo "Calculating SHA1..."
+    keytool -printcert -jarfile "$file" | grep "SHA1" | awk '{print $2}'
+  else
+    echo "keytool command not found. Please install Java Development Kit (JDK)."
+    return 1
+  fi
+
+  # Cleanup if the file was extracted from XAPK
+  if [[ "$file" != "$1" ]]; then
+    rm -rf "$temp_dir"
+  fi
+}
+
+apk_dump() {
+  if [ -z "$1" ]; then
+    echo "Usage: dump_apk_by_name <name>"
+    return 1
+  fi
+
+  SEARCH_NAME=$1
+  PACKAGE_NAME=$(adb shell pm list packages | grep -i "$SEARCH_NAME" | sed 's/package://')
+
+  if [ -z "$PACKAGE_NAME" ]; then
+    echo "No package found matching '$SEARCH_NAME'."
+    return 1
+  fi
+
+  echo "Found package: $PACKAGE_NAME"
+  APK_PATH=$(adb shell pm path "$PACKAGE_NAME" 2>/dev/null)
+
+  if [ -z "$APK_PATH" ]; then
+    echo "Failed to find APK path for package '$PACKAGE_NAME'."
+    return 1
+  fi
+
+  APK_PATH=${APK_PATH/package:/}
+
+  echo "APK path for '$PACKAGE_NAME' is $APK_PATH"
+  adb pull "$APK_PATH" .
+
+  if [ $? -eq 0 ]; then
+    echo "APK file has been dumped successfully."
+  else
+    echo "Failed to dump the APK file."
+    return 1
+  fi
 }

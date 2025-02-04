@@ -77,9 +77,9 @@
 	autoSetupRemote = true
 [include]
 	path = "~/.config/git/longnghia.config"
-[includeIf "gitdir:/Volumes/DATA/GO/"]
-	path = "~/.config/git/go.github.config"
-[includeIf "gitdir:/Volumes/DATA/GO/oyika/"]
-	path = "~/.config/git/go.bitbucket.config"
+[includeIf "gitdir:~/Data/PaulCoding810/"]
+	path = "~/.config/git/paulcoding810.config"
+[includeIf "gitdir:~/Data/clonevol1/"]
+	path = "~/.config/git/clonevol1.config"
 [init]
 	defaultBranch = main
