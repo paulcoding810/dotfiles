@@ -1,0 +1,33 @@
+export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+_install_nvm() {
+  unset -f nvm npm node yarn npx
+  echo install nvm...
+  # Set up "nvm" could use "--no-use" to defer setup, but we are here to use it
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This sets up nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # nvm bash_completion
+  "$@"
+}
+
+function nvm() {
+    _install_nvm nvm "$@"
+}
+
+function npm() {
+    _install_nvm npm "$@"
+}
+
+
+function yarn() {
+    _install_nvm yarn "$@"
+}
+
+function npx() {
+    _install_nvm npx "$@"
+}
+
+function node() {
+    _install_nvm node "$@"
+}

@@ -1,13 +1,20 @@
-NC='\033[0m'       # Text Reset
-BLACK='\033[0;30m' # Black
-RED='\033[0;31m'   # Red
-GREEN='\033[0;32m' # Green
-red() { printf "\033[31m${1}\033[0m\n"; }
-green() { printf "\033[32m${1}\033[0m\n"; }
-yellow() { printf "\033[33m${1}\033[0m\n"; }
-orange() { printf "\033[38;5;208m${1}\033[0m\n"; }
-blue() { printf "\033[38;5;27m${1}\033[0m\n"; }
-purple() { printf "\033[35m${1}\033[0m\n\n"; }
+# Add Android SDK tools
+export ANDROID_HOME="${HOME}/Library/Android/sdk"
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+
+if [ -d "${ANDROID_HOME}" ]; then
+  PATH="${PATH}:${ANDROID_HOME}/platform-tools"
+  PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
+  ANDROID_BUILD_TOOLS_DIR="${ANDROID_HOME}/build-tools"
+
+  NDK_DIR="${ANDROID_HOME}/ndk"
+  if [ -d "${NDK_DIR}" ]; then
+  	PATH="${PATH}:${NDK_DIR}/$(ls -1 ${NDK_DIR} | sort -rn | head -1)/toolchains/llvm/prebuilt/darwin-x86_64/bin"
+  fi
+  
+  PATH="${PATH}:${ANDROID_BUILD_TOOLS_DIR}/$(ls -1 ${ANDROID_BUILD_TOOLS_DIR} | sort -rn | head -1)"
+  PATH="${PATH}:${ANDROID_HOME}/tools"
+fi
 
 adbx() {
 	if [[ $# -lt 1 ]]; then
