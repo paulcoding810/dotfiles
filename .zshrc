@@ -17,7 +17,7 @@ source $ZSH/oh-my-zsh.sh
 zmodload zsh/zprof
 
 # Set options
-setopt autocd correct interactivecomments magicequalsubst notify numericglobsort promptsubst
+setopt autocd interactivecomments magicequalsubst notify numericglobsort promptsubst
 
 WORDCHARS=${WORDCHARS//\//}
 PROMPT_EOL_MARK=""
@@ -104,3 +104,7 @@ export PATH="$PATH:/Users/paul/.local/bin"
 
 # rust
 . "$HOME/.cargo/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/paul/.lmstudio/bin"
+
