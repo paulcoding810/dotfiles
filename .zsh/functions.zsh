@@ -58,3 +58,8 @@ find_path_in_files() {
     [[ -f "$file" && "$(grep -q "$path_to_find" "$file")" ]] && echo "Path '$path_to_find' found in $file"
   done
 }
+
+# git archive source code
+gitzip() {
+  git archive --format=zip --output="$HOME/Downloads/$(basename $(git rev-parse --show-toplevel)).zip" HEAD
+}
