@@ -8,8 +8,11 @@ if [ -d "${ANDROID_HOME}" ]; then
 	ANDROID_BUILD_TOOLS_DIR="${ANDROID_HOME}/build-tools"
 
 	NDK_DIR="${ANDROID_HOME}/ndk"
+
 	if [ -d "${NDK_DIR}" ]; then
-		PATH="${PATH}:${NDK_DIR}/$(ls -1 ${NDK_DIR} | sort -rn | head -1)/toolchains/llvm/prebuilt/darwin-x86_64/bin"
+		export NDK=${NDK_DIR}/$(ls -1 ${NDK_DIR} | sort -rn | head -1)
+		export ANDROID_NDK_HOME=$NDK
+		PATH="${PATH}:$NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin"
 	fi
 
 	PATH="${PATH}:${ANDROID_BUILD_TOOLS_DIR}/$(ls -1 ${ANDROID_BUILD_TOOLS_DIR} | sort -rn | head -1)"
