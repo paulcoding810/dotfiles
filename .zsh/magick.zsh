@@ -6,7 +6,7 @@ merge_images() {
 
   output="merge_$(date +%s).png"
 
-  magick montage "$@" -tile "${#@}x1" -geometry +0+0 "$output"
+  magick montage "$@" -tile "${#@}x1" -geometry +10+0 "$output"
 
   echo "Output file: ${output}"
 }
