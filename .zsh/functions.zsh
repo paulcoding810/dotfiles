@@ -11,7 +11,7 @@ appath() {
   [[ "$1" =~ \.app$ ]] || app_name="$1.app"
 
   app_path="$(find /Applications -type d -name "$app_name" -maxdepth 5 | fgrep -m 1 "$app_name")"
-  app_path="${app_path:-$($path_to_lsregister/lsregister -dump | grep -m 1 "$app_name" | sed 's:.* \(/.*app\) .*:\1:')}"
+app_path="${app_path:-$($path_to_lsregister/lsregister -dump | grep -m 1 "$app_name" | sed 's:.* \(/.*app\) .*:\1:')}"
   [[ -r "$app_path/Contents/Info.plist" ]] && echo "$app_path/Contents/MacOS/$(defaults read "$app_path/Contents/Info.plist" CFBundleExecutable)"
 }
 
@@ -36,7 +36,8 @@ appid() {
 
 # get local ip
 ip() {
-  ifconfig | grep 'inet 192.168' | awk '{print $2}'
+  # ifconfig | grep -E 'inet (192\.168|172\.16)' | awk '{print $2}'
+  ifconfig en0 | grep "inet " | awk '{print $2}'
 }
 
 # get public ip
@@ -62,4 +63,16 @@ find_path_in_files() {
 # git archive source code
 gitzip() {
   git archive --format=zip --output="$HOME/Downloads/$(basename $(git rev-parse --show-toplevel)).zip" HEAD
+}
+
+findf() {
+    # List aliases containing "string"
+    alias | grep $1
+
+    # List functions containing "string"
+    declare -f | grep $1
+}
+
+pw() {
+  cat ~/.pw | pbcopy
 }

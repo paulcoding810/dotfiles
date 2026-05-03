@@ -1,6 +1,7 @@
 # Add Android SDK tools
 export ANDROID_HOME="${HOME}/Library/Android/sdk"
-export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+# export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+export JAVA_HOME="${HOME}/Library/Java/JavaVirtualMachines/jbr-17.0.14/Contents/Home"
 
 if [ -d "${ANDROID_HOME}" ]; then
 	PATH="${PATH}:${ANDROID_HOME}/platform-tools"
@@ -58,11 +59,11 @@ adbs() {
 	name="${1:-screenshot}.png"
 	adb shell screencap /data/local/tmp/screenshot.png
 	adb pull /data/local/tmp/screenshot.png ~/Downloads/$name
-	impbcopy "~/Downloads/$name"
+	impbcopy ~/Downloads/$name
 }
 adbr() {
 	local destination_path=${1:-~/Downloads}
-	adb shell screenrecord /data/local/tmp/screenrecord.mp4 &
+	adb shell screenrecord --bit-rate 10M /data/local/tmp/screenrecord.mp4 &
 	local recording_pid=$!
 	echo "Screen recording started. Press Ctrl + C to stop..."
 	trap '[[ -n "$recording_pid" ]] && ps -p "$recording_pid" > /dev/null && kill "$recording_pid"' INT
@@ -74,7 +75,7 @@ adbr() {
 
 ## install apks from input
 adbi() {
-	adb install-multi-package $@
+	adb install-multi-package --bypass-low-target-sdk-block $@
 }
 adbi-sync() {
 	for f in $@; do
@@ -86,14 +87,14 @@ adbi-sync() {
 
 # list devices
 adbd() {
-	adb devices
+	adb devices -l
 }
 
 # input text
 adbt() {
-	local text="$1"
-	local quoted_text=$(echo "$text" | sed 's/;/\\;/g')
-	adb shell input text "$quoted_text"
+	# local text='$1'
+	# local quoted_text=$(echo "$text" | sed 's/;/\\;/g')
+	adb shell input text $1
 }
 
 compress_video() {
@@ -130,6 +131,30 @@ mitm() {
 	adb shell settings put global http_proxy $(ip):8888
 
 	mitmweb -p 8888 &
+
+	# Get the process ID of mitmweb
+	local mitmweb_pid=$!
+
+	turn_off_proxy() {
+		kill $mitmweb_pid
+		trap - INT
+		adb shell settings put global http_proxy :0
+		echo "Proxy turned off"
+	}
+
+	trap turn_off_proxy INT
+
+	wait ${mitmweb_pid}
+
+	turn_off_proxy
+}
+
+mitmm() {
+	echo ip=$(ip)
+
+	adb shell settings put global http_proxy $(ip):8888
+
+	mitmproxy -p 8888
 
 	# Get the process ID of mitmweb
 	local mitmweb_pid=$!
