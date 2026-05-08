@@ -20,6 +20,7 @@
 [alias]
 	st = status
 	ll = log --oneline
+	l  = "!f() { git ll | head -n "${1:-10}"; }; f"
 	d = diff
 	sp = stash pop
 	# typos
@@ -33,6 +34,7 @@
 	checkotu = checkout
 	checkou = checkout
 	checout = checkout
+	chekcout = checkout
 	cherrypick = cherry-pick
 	cp = cherry-pick
 	cloen = clone
@@ -67,6 +69,7 @@
 	noskip = update-index --no-skip-worktree
 	fo = fetch origin
 	undo = reset --soft HEAD~1
+	fco = "!f() { git fetch origin \"$1\" && git checkout \"$1\" ; }; f"
 [interactive]
 	diffFilter = delta --color-only
 [delta]

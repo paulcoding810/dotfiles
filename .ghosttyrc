@@ -1,0 +1,97 @@
+# https://github.com/linhmtran168/mac_dotfiles/blob/master/config.ghostty
+
+# ==========================================
+# 🎨 THEME & TYPOGRAPHY
+# ==========================================
+theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+
+# font-family = "Cascadia Code NF"
+font-family = "Monaspace Neon NF"
+font-family-italic = "Monaspace Radon NF"
+font-family-bold = "Monaspace Neon NF"
+font-family-bold-italic = "Monaspace Radon NF"
+font-size = 12.2
+
+# Breathing room for Neovim split borders
+adjust-cell-height = 10%
+
+# OpenType features — explicit +/- prefix for clarity
+# dotted zero
+font-feature = +zero
+# alternate *
+font-feature = +cv11
+
+# Uncomment to kill ligatures (cleaner diffs / LSP hover in Neovim):
+# font-feature = -liga
+# font-feature = -calt
+# Critical for Monaspace Texture Healing
+font-feature = +calt
+# Keep standard ligatures
+font-feature = +liga
+
+# ==========================================
+# 🪟 WINDOW & UI
+# ==========================================
+macos-titlebar-style = tabs
+window-padding-x = 12
+window-padding-y = 12
+window-padding-balance = true
+window-save-state = always
+window-inherit-working-directory = false
+
+background-opacity = 0.90
+background-blur-radius = 20
+
+mouse-hide-while-typing = true
+
+# Warn before closing a surface with a running process.
+# Default already covers this, but being explicit is cheap.
+confirm-close-surface = false
+
+# ==========================================
+# 🛠️ NEOVIM / MACOS FIXES
+# ==========================================
+# Option acts as Alt so Neovim gets Meta-bindings instead of ∆˙¬ noise.
+# Use `left` instead of `true` if you need right-Option for typing accents.
+macos-option-as-alt = false
+
+# Keep paste protection ON — it only triggers on pastes containing
+# newlines/control sequences that would auto-execute. Cheap insurance.
+clipboard-paste-protection = true
+
+# "clipboard" = write selection to the actual system pasteboard,
+# not just Ghostty's internal selection buffer.
+copy-on-select = clipboard
+
+# ==========================================
+# 🐚 SHELL INTEGRATION
+# ==========================================
+shell-integration = zsh
+# cursor: bar-at-prompt • sudo: preserves env over sudo
+# title: auto-updates window title • ssh-env: propagates TERM/colors over ssh
+shell-integration-features = cursor,sudo,title,ssh-env,path
+
+# Rails logs / test output eat scrollback fast. 100M bytes ≈ plenty.
+scrollback-limit = 100000000
+
+# ==========================================
+# 🚀 QUICK TERMINAL (scratchpad)
+# ==========================================
+quick-terminal-position = top
+# For position=top, the primary axis is HEIGHT, secondary is WIDTH.
+# 40% tall, 80% wide — short-and-wide dropdown.
+quick-terminal-size = 40%,80%
+quick-terminal-animation-duration = 0.1
+keybind = global:super+shift+grave_accent=toggle_quick_terminal
+keybind = cmd+l=clear_screen
+
+# ==========================================
+# ⌨️ KEYBINDS
+# ==========================================
+# Shift+Enter → Alt+Enter bytes (\x1b\r).
+# Lets multi-line TUIs (Claude Code, Aider, chat CLIs) insert a newline
+# instead of submitting. Arrives at Neovim's :terminal as <M-CR> / <A-CR>.
+keybind = shift+enter=text:\x1b\r
+
+
+
