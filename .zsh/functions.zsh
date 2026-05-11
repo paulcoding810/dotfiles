@@ -11,7 +11,7 @@ appath() {
   [[ "$1" =~ \.app$ ]] || app_name="$1.app"
 
   app_path="$(find /Applications -type d -name "$app_name" -maxdepth 5 | fgrep -m 1 "$app_name")"
-app_path="${app_path:-$($path_to_lsregister/lsregister -dump | grep -m 1 "$app_name" | sed 's:.* \(/.*app\) .*:\1:')}"
+  app_path="${app_path:-$($path_to_lsregister/lsregister -dump | grep -m 1 "$app_name" | sed 's:.* \(/.*app\) .*:\1:')}"
   [[ -r "$app_path/Contents/Info.plist" ]] && echo "$app_path/Contents/MacOS/$(defaults read "$app_path/Contents/Info.plist" CFBundleExecutable)"
 }
 
@@ -26,7 +26,7 @@ mkcd() {
 }
 
 cd() {
-  builtin cd "$@" && ls
+  builtin cd "$@" && ls -t | head -20
 }
 
 appid() {
@@ -66,11 +66,11 @@ gitzip() {
 }
 
 findf() {
-    # List aliases containing "string"
-    alias | grep $1
+  # List aliases containing "string"
+  alias | grep $1
 
-    # List functions containing "string"
-    declare -f | grep $1
+  # List functions containing "string"
+  declare -f | grep $1
 }
 
 pw() {
