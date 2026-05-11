@@ -57,7 +57,7 @@ macos-option-as-alt = false
 
 # Keep paste protection ON — it only triggers on pastes containing
 # newlines/control sequences that would auto-execute. Cheap insurance.
-clipboard-paste-protection = true
+clipboard-paste-protection = false
 
 # "clipboard" = write selection to the actual system pasteboard,
 # not just Ghostty's internal selection buffer.
