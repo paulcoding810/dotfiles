@@ -93,3 +93,5 @@
 	path = "~/.config/git/w3w.config"
 [init]
 	defaultBranch = main
+[credential]
+	helper = store
