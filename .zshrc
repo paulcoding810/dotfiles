@@ -13,6 +13,7 @@ HISTSIZE=1000
 SAVEHIST=2000
 setopt hist_expire_dups_first hist_ignore_dups hist_ignore_space hist_verify
 setopt autocd interactivecomments magicequalsubst notify numericglobsort promptsubst
+setopt SHARE_HISTORY INC_APPEND_HISTORY HIST_IGNORE_ALL_DUPS 
 
 export GEM_HOME=$HOME/.gem
 export EDITOR="vim"
