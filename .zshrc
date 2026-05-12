@@ -1,7 +1,6 @@
 zmodload zsh/zprof
 
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
-zstyle ':omz:update' mode disabled
 zstyle ':completion:*' accept-exact '*(N)'
 
 WORDCHARS=${WORDCHARS//\//}
@@ -50,6 +49,10 @@ done
 
 # Source scripts
 for file in ~/.zsh/*.zsh; do [ -f "$file" ] && source "$file"; done
+
+source <(fzf --zsh)
+source <(bun completions)
+
 
 # Prof
 false && (zprof | head)
