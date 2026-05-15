@@ -18,3 +18,7 @@ git-reinit() {
         echo "❌ Aborted."
     fi
 }
+
+gitzip() {
+    git archive --format=zip --output="$HOME/Downloads/$(basename $(git rev-parse --show-toplevel)).zip" HEAD
+}

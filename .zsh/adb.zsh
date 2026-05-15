@@ -1,11 +1,18 @@
+# android
 # Add Android SDK tools
 export ANDROID_HOME="${HOME}/Library/Android/sdk"
-# export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-export JAVA_HOME="${HOME}/Library/Java/JavaVirtualMachines/jbr-17.0.14/Contents/Home"
+
+local JVM="$HOME/Library/Java/JavaVirtualMachines"
+[ -d "$JVM" ] && export JAVA_HOME="$JVM/$(ls $JVM | head -1)"
+
+local CMAKE="$HOME/Library/Android/sdk/cmake"
+[ -d "$CMAKE" ] && PATH="$PATH:$CMAKE/$(ls $CMAKE | head -1)/bin"
 
 if [ -d "${ANDROID_HOME}" ]; then
 	PATH="${PATH}:${ANDROID_HOME}/platform-tools"
 	PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
+	PATH="${PATH}:${ANDROID_HOME}/emulator"
+
 	ANDROID_BUILD_TOOLS_DIR="${ANDROID_HOME}/build-tools"
 
 	NDK_DIR="${ANDROID_HOME}/ndk"
@@ -20,25 +27,46 @@ if [ -d "${ANDROID_HOME}" ]; then
 	PATH="${PATH}:${ANDROID_HOME}/tools"
 fi
 
+# adbx() {
+# 	if [[ $# -lt 1 ]]; then
+# 		red 'error: missing device ordinal number'
+# 		echo Usage:
+# 		green '\tadbx 1'
+# 		adb devices | sed -n "$device p" | sed 's/[[:space:]]device//'
+# 		return 1
+# 	fi
+# 	local adb_path=$(alias adb)
+# 	[ -z $adb_path ] || unalias adb
+# 	local device=$(expr $1 + 1)
+# 	local ip=$(adb devices | sed -n "$device p" | sed 's/[[:space:]]device//')
+# 	local model=$(adb -s $ip shell getprop ro.product.model)
+# 	green "using $model ($ip)"
+# 	alias adb="adb -s ${ip}"
+# 	alias scrcpy="scrcpy -s ${ip} > /dev/null 2&>1 &"
+# 	echo sourcing...
+# 	source ~/.zsh/adb.zsh
+# }
+
 adbx() {
-	if [[ $# -lt 1 ]]; then
-		red 'error: missing device ordinal number'
-		echo Usage:
-		green '\tadbx 1'
+  if [[ $# -lt 1 ]]; then
+    red 'error: missing device ordinal number'
+    echo 'Usage:'
+    green '\tadbx 1'
 		adb devices | sed -n "$device p" | sed 's/[[:space:]]device//'
-		return 1
-	fi
-	local adb_path=$(alias adb)
-	[ -z $adb_path ] || unalias adb
-	local device=$(expr $1 + 1)
-	local ip=$(adb devices | sed -n "$device p" | sed 's/[[:space:]]device//')
-	local model=$(adb -s $ip shell getprop ro.product.model)
-	green "using $model ($ip)"
-	alias adb="adb -s ${ip}"
-	alias scrcpy="scrcpy -s ${ip} > /dev/null 2&>1 &"
-	echo sourcing...
-	source ~/.zsh/adb.zsh
+    return 1
+  fi
+
+  unset -f adb scrcpy 2>/dev/null
+
+  local device=$(expr $1 + 1)
+  _ADBX_IP=$(adb devices | sed -n "${device}p" | sed 's/[[:space:]]device//')
+  local model=$(adb -s $_ADBX_IP shell getprop ro.product.model)
+
+  green "using $model ($_ADBX_IP)"
+  adb() { command adb -s "${_ADBX_IP}" "$@"; }
+  scrcpy() { command scrcpy -s "${_ADBX_IP}" "$@" >/dev/null 2>&1 &; }
 }
+
 adbw() {
 	adb tcpip 5555
 }
