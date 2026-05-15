@@ -61,7 +61,7 @@ clipboard-paste-protection = false
 
 # "clipboard" = write selection to the actual system pasteboard,
 # not just Ghostty's internal selection buffer.
-copy-on-select = clipboard
+copy-on-select = false
 
 # ==========================================
 # 🐚 SHELL INTEGRATION
