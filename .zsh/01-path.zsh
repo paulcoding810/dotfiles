@@ -6,6 +6,7 @@ apps=(
   "/Applications/Firefox Developer Edition.app/Contents/MacOS"
   "/Applications/Android Studio.app/Contents/MacOS"
   "/Applications/Beyond Compare.app/Contents/MacOS"
+  "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
   "$(python3 -m site --user-base)/bin"
   "${HOME}/Library/flutter/bin"
   "${HOME}/Library/nvim-macos/bin"
@@ -16,7 +17,6 @@ apps=(
   "${HOME}/.nvm/versions/node/v22.17.0/bin"
   "${HOME}/.maestro/bin"
   "/usr/local/bin/quickemu"
-  "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
   "/usr/local/bin"
   "/usr/local/bin/vd-tool/bin"
 )
