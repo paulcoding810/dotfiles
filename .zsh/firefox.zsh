@@ -1,4 +1,5 @@
 add_history() {
+
   usage() {
     echo "Usage: $0 <url> <title>"
     exit 1
@@ -21,13 +22,16 @@ add_history() {
 
   DB="$PROFILE_DIR/$PROFILE/places.sqlite"
 
-  sqlite3 "$DB" <<SQL
+  sqlite3 "$DB" <<SQL || {
 INSERT INTO moz_places (url, title, visit_count, last_visit_date)
 VALUES ('$URL', '$TITLE', 1, strftime('%s', 'now') * 1000000);
 
 INSERT INTO moz_historyvisits (place_id, visit_date, visit_type)
 VALUES (last_insert_rowid(), strftime('%s', 'now') * 1000000, 1);
 SQL
+    echo "sqlite3 failed" >&2
+    exit 1
+  }
 
   echo "Added: $TITLE ($URL)"
 }
