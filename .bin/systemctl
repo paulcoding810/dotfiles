@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+AGENTS_DIR="$HOME/Library/LaunchAgents"
+
+usage() {
+  cat <<EOF
+Usage:
+  systemctl <command> [service]
+
+Commands:
+  start       Start service
+  stop        Stop service
+  restart     Restart service
+  reload      Alias for restart
+  status      Show service status
+  validate    Validate plist
+  list        List installed LaunchAgents
+  active      List loaded LaunchAgents
+
+Examples:
+  systemctl start com.example.app
+  systemctl restart com.example.app
+  systemctl status com.example.app
+EOF
+  exit 1
+}
+
+resolve_plist() {
+  local service="$1"
+
+  if [[ -f "$service" ]]; then
+    echo "$service"
+    return
+  fi
+
+  local plist="$AGENTS_DIR/$service.plist"
+
+  [[ -f "$plist" ]] || {
+    echo "Service not found: $service"
+    exit 1
+  }
+
+  echo "$plist"
+}
+
+get_label() {
+  local plist="$1"
+
+  /usr/libexec/PlistBuddy \
+    -c "Print :Label" \
+    "$plist" \
+    2>/dev/null || basename "$plist" .plist
+}
+
+cmd="${1:-}"
+service="${2:-}"
+
+[[ -z "$cmd" ]] && usage
+
+case "$cmd" in
+list)
+  find "$AGENTS_DIR" -name '*.plist' \
+    -exec basename {} .plist \; |
+    sort
+  exit 0
+  ;;
+
+active)
+  launchctl list | awk '{print $3}' | sort
+  exit 0
+  ;;
+esac
+
+[[ -z "$service" ]] && usage
+
+plist="$(resolve_plist "$service")"
+label="$(get_label "$plist")"
+domain="gui/$(id -u)"
+
+case "$cmd" in
+start)
+  launchctl bootstrap "$domain" "$plist"
+  ;;
+
+stop)
+  launchctl bootout "$domain" "$plist"
+  ;;
+
+restart | reload)
+  launchctl bootout "$domain" "$plist" 2>/dev/null || true
+  launchctl bootstrap "$domain" "$plist"
+  ;;
+
+status)
+  launchctl print "$domain/$label"
+  ;;
+
+validate)
+  plutil -lint "$plist"
+  ;;
+
+*)
+  usage
+  ;;
+esac
