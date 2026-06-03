@@ -27,26 +27,6 @@ if [ -d "${ANDROID_HOME}" ]; then
 	PATH="${PATH}:${ANDROID_HOME}/tools"
 fi
 
-# adbx() {
-# 	if [[ $# -lt 1 ]]; then
-# 		red 'error: missing device ordinal number'
-# 		echo Usage:
-# 		green '\tadbx 1'
-# 		adb devices | sed -n "$device p" | sed 's/[[:space:]]device//'
-# 		return 1
-# 	fi
-# 	local adb_path=$(alias adb)
-# 	[ -z $adb_path ] || unalias adb
-# 	local device=$(expr $1 + 1)
-# 	local ip=$(adb devices | sed -n "$device p" | sed 's/[[:space:]]device//')
-# 	local model=$(adb -s $ip shell getprop ro.product.model)
-# 	green "using $model ($ip)"
-# 	alias adb="adb -s ${ip}"
-# 	alias scrcpy="scrcpy -s ${ip} > /dev/null 2&>1 &"
-# 	echo sourcing...
-# 	source ~/.zsh/adb.zsh
-# }
-
 adbx() {
   if [[ $# -lt 1 ]]; then
     red 'error: missing device ordinal number'
@@ -86,7 +66,8 @@ adbc() {
 adbs() {
 	name="${1:-screenshot}.png"
 	adb shell screencap /data/local/tmp/screenshot.png
-	adb pull /data/local/tmp/screenshot.png ~/Downloads/$name
+	mkdir -p ~/Downloads/screenshot
+	adb pull /data/local/tmp/screenshot.png ~/Downloads/screenshot/$name
 	impbcopy ~/Downloads/$name
 }
 adbr() {

@@ -20,7 +20,8 @@
 	# typos
 	ad = add
 	bisec = bisect
-	b = branch --sort=-committerdate
+	b = !git branch --sort=-committerdate | head -8
+	branch = branch --sort=-committerdate
 	bisetc = bisect
 	branhc = branch
 	breach = branch
@@ -59,6 +60,7 @@
 	# https://stackoverflow.com/a/23486788
 	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} \"$@\");};f"
 	skip = update-index --skip-worktree
+	listskip = !git ls-files -v | grep ^S
 	noskip = update-index --no-skip-worktree
 	fo = fetch origin
 	undo = reset --soft HEAD~1
