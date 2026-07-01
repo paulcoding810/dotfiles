@@ -277,3 +277,6 @@ logcat() {
 		echo "Process not found: $process_name"
 	fi
 }
+adbip(){
+	adb shell "ip addr show wlan0 | grep inet"
+}
