@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+COMMIT_MSG_FILE="$1"
+
+# Remove AI-generated Co-authored-by trailers
+sed -i.bak '/^Co-authored-by:.*\(GitHub Copilot\|Claude\|ChatGPT\|Cursor\|Codeium\|Amazon Q\|Firebender\)/Id' "$COMMIT_MSG_FILE"
+
+# Remove backup file (macOS/BSD sed creates one)
+rm -f "${COMMIT_MSG_FILE}.bak"

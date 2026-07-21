@@ -5,6 +5,7 @@
 	required = true
 [core]
 	excludesfile = ~/.gitignore
+	hooksPath = ~/.git_hooks
 	pager = delta
 	autocrlf = input
 	ignorecase = false
