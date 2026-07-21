@@ -5,15 +5,15 @@ export ANDROID_HOME="${HOME}/Library/Android/sdk"
 local JVM="$HOME/Library/Java/JavaVirtualMachines"
 [ -d "$JVM" ] && export JAVA_HOME="$JVM/$(ls $JVM | head -1)/Contents/Home"
 
-local CMAKE="$HOME/Library/Android/sdk/cmake"
+local CMAKE="$ANDROID_HOME/cmake"
 [ -d "$CMAKE" ] && PATH="$PATH:$CMAKE/$(ls $CMAKE | head -1)/bin"
 
 if [ -d "${ANDROID_HOME}" ]; then
 	PATH="${PATH}:${ANDROID_HOME}/platform-tools"
 	PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
 	PATH="${PATH}:${ANDROID_HOME}/emulator"
-
 	ANDROID_BUILD_TOOLS_DIR="${ANDROID_HOME}/build-tools"
+	ANDROID_AUTO_DIR="${ANDROID_HOME}/extras/google/auto"
 
 	NDK_DIR="${ANDROID_HOME}/ndk"
 
@@ -21,6 +21,10 @@ if [ -d "${ANDROID_HOME}" ]; then
 		export NDK=${NDK_DIR}/$(ls -1 ${NDK_DIR} | sort -rn | head -1)
 		export ANDROID_NDK_HOME=$NDK
 		PATH="${PATH}:$NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin"
+	fi
+
+	if [ -d "$ANDROID_AUTO_DIR" ] ; then
+		PATH="${PATH}:$ANDROID_AUTO_DIR"
 	fi
 
 	PATH="${PATH}:${ANDROID_BUILD_TOOLS_DIR}/$(ls -1 ${ANDROID_BUILD_TOOLS_DIR} | sort -rn | head -1)"
