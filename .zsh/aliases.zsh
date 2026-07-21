@@ -1,7 +1,7 @@
 # Aliases and Path Management
 alias ll='ls -lahF'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls -CF -t | head -20'
 alias lf='la | fzf -0 -m --preview "realpath {}" --preview-window=up:30%:wrap | tr "\n" "\0" | xargs -0 realpath | tee >(pbcopy)'
 alias adbe='${HOME}/Library/Android/sdk/emulator/emulator -avd Pixel_5_API_28  -netdelay none -netspeed full  > /dev/null 2>&1 &'
 alias cat="bat -pp"
