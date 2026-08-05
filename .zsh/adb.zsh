@@ -3,7 +3,7 @@
 export ANDROID_HOME="${HOME}/Library/Android/sdk"
 
 local JVM="$HOME/Library/Java/JavaVirtualMachines"
-[ -d "$JVM" ] && export JAVA_HOME="$JVM/$(ls $JVM | head -1)/Contents/Home"
+[ -d "$JVM" ] && export JAVA_HOME="$JVM/$(ls $JVM | grep 17)/Contents/Home"
 
 local CMAKE="$ANDROID_HOME/cmake"
 [ -d "$CMAKE" ] && PATH="$PATH:$CMAKE/$(ls $CMAKE | head -1)/bin"
@@ -284,3 +284,5 @@ logcat() {
 adbip(){
 	adb shell "ip addr show wlan0 | grep inet"
 }
+
+alias adb_view="adb shell am start -W -a android.intent.action.VIEW -d"
