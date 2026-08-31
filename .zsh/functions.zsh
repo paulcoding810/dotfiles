@@ -33,3 +33,7 @@ ff() {
 paths() {
   echo $PATH | tr ':' '\n' | grep $HOME | sort
 }
+
+backup() {
+	curl -fsSL https://gist.paulcoding.com/admin/02bee2418ad94a3799b80c6619f24654/raw/HEAD/backup.sh | sh
+}
