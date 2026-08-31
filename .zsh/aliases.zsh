@@ -31,3 +31,8 @@ alias dl="cd ~/Downloads"
 alias keychain="open '/System/Library/CoreServices/Applications/Keychain Access.app'"
 alias xapp="sudo xattr -rd com.apple.quarantine"
 alias neo="neofetch"
+
+alias c='claude'
+alias ch='claude --chrome'
+alias cr='claude remote-control'
+alias w3w='cd ~/Data/w3w'
