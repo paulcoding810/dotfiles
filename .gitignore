@@ -2,3 +2,5 @@
 .cfg
 .codegraph
 .cursor
+
+**/.claude/settings.local.json

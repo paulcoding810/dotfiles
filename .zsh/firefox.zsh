@@ -1,20 +1,6 @@
-add_history() {
-  usage() {
-    echo "Usage: $0 <url> <title>" >&2
-    return 1
-  }
-
-  if [[ $# -ne 2 ]]; then
-    usage
-    return $?
-  fi
-
-  local url="$1"
-  local title="$2"
+ff_db() {
   local profile_dir="$HOME/Library/Application Support/Firefox/Profiles"
   local profile
-  local db
-  local output
 
   if [[ ! -d "$profile_dir" ]]; then
     echo "Error: Firefox profiles directory not found: $profile_dir" >&2
@@ -32,7 +18,31 @@ add_history() {
     return 1
   fi
 
-  db="$profile/places.sqlite"
+  if [[ -z "$profile" ]]; then
+    echo "Error: no Firefox default-release profile found." >&2
+    return 1
+  fi
+
+  echo "$profile/places.sqlite"
+}
+
+ff_history() {
+  usage() {
+    echo "Usage: $0 <url> <title>" >&2
+    return 1
+  }
+
+  if [[ $# -ne 2 ]]; then
+    usage
+    return $?
+  fi
+
+  local url="$1"
+  local title="$2"
+  local db
+  local output
+
+  db=$(ff_db)
 
   if [[ ! -f "$db" ]]; then
     echo "Error: Firefox history database not found: $db" >&2
